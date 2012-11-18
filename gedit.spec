@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.6.1
+Version:	3.6.2
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	fd07a79e2d87aea8cae3332f06176800
+# Source0-md5:	7c336819c023a4772cfb48ebe95a7113
 URL:		http://gedit.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -153,7 +153,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gedit/plugins/spell.plugin
 %{_libdir}/gedit/plugins/time.plugin
 %{_datadir}/gedit
-%{_datadir}/GConf/gsettings/gedit.convert
 %{_datadir}/dbus-1/services/org.gnome.gedit.service
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.enums.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.gschema.xml
