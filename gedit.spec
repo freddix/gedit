@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.6.2
-Release:	1
+Version:	3.8.0
+Release:	0.1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	7c336819c023a4772cfb48ebe95a7113
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.8/%{name}-%{version}.tar.xz
+# Source0-md5:	dc8a377ef1f48e6303d87cfb7c246524
 URL:		http://gedit.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -92,7 +92,7 @@ sed -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
 %build
 %{__libtoolize}
 %{__intltoolize}
-%{__aclocal} -I m4
+%{__aclocal} -I m4 -I libgd
 %{__autoconf}
 %{__automake}
 %configure \
@@ -163,6 +163,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/gedit.desktop
 %{_mandir}/man1/gedit.1*
 
+%if 0
 %files plugins-python
 %defattr(644,root,root,755)
 %dir %{_libdir}/gedit/plugins/externaltools
@@ -180,6 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.externaltools.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.pythonconsole.gschema.xml
 %{py_sitedir}/gi/overrides/*.py[co]
+%endif
 
 %files plugin-zeitgeist
 %defattr(644,root,root,755)
