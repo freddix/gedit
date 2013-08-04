@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.8.0
-Release:	0.1
+Version:	3.8.3
+Release:	2
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	dc8a377ef1f48e6303d87cfb7c246524
+# Source0-md5:	dd81bffac9026854e33ded9e8ed9bf7c
 URL:		http://gedit.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -19,12 +19,12 @@ BuildRequires:	gtk-doc
 BuildRequires:	gtksourceview3-devel
 BuildRequires:	intltool
 BuildRequires:	iso-codes
-BuildRequires:	libglade-devel
 BuildRequires:	libpeas-gtk-devel
 BuildRequires:	libtool
-BuildRequires:	libzeitgeist-devel
+# zeitgeist-2.0 required
+#BuildRequires:	libzeitgeist-devel
 BuildRequires:	pkg-config
-BuildRequires:	python-pygobject3-devel
+BuildRequires:	python3-pygobject3-devel
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	glib-gio-gsettings
 Requires:	%{name}-libs = %{version}-%{release}
@@ -38,14 +38,15 @@ includes such features as split-screen mode, a plugin API, which
 allows gedit to be extended to support many features while remaining
 small at its core, multiple document editing and many more functions.
 
-%package plugins-python
-Summary:	Gedit plugins written in python
+%package plugins-python3
+Summary:	Gedit plugins written in Python
 Group:		Applications
 Requires:	%{name} = %{version}-%{release}
-Requires:	python-pygobject3
+Requires:	libpeas-loader-python3
+Requires:	python3-pycairo
 
-%description plugins-python
-Gedit plugins written in python.
+%description plugins-python3
+Gedit plugins written in Python.
 
 %package plugin-zeitgeist
 Summary:	Gedit zeitgeist plugin
@@ -84,7 +85,7 @@ gedit API documentation.
 %setup -q
 
 # kill gnome common deps
-sed -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
+%{__sed} -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
     -i -e 's/GNOME_MAINTAINER_MODE_DEFINES//g'	\
     -i -e 's/GNOME_COMMON_INIT//g'		\
     -i -e 's/GNOME_DEBUG_CHECK//g' configure.ac
@@ -109,9 +110,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/{ca@valencia,crh,en@shaw,la}
-rm -f $RPM_BUILD_ROOT%{_libdir}/gedit/plugins/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/gedit/plugins/*/*.py
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{ca@valencia,crh,en@shaw,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gedit/plugins/*.la
 
 %py_postclean
 
@@ -128,10 +128,10 @@ rm -rf $RPM_BUILD_ROOT
 %update_desktop_database_postun
 %update_gsettings_cache
 
-%post plugins-python
+%post plugins-python3
 %update_gsettings_cache
 
-%postun plugins-python
+%postun plugins-python3
 %update_gsettings_cache
 
 %post	libs -p /usr/sbin/ldconfig
@@ -144,7 +144,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gedit
 %attr(755,root,root) %{_bindir}/gnome-text-editor
 %attr(755,root,root) %{_libdir}/gedit/plugins/*.so
+%if 0
 %exclude %{_libdir}/gedit/plugins/libzeitgeistplugin.so
+%endif
 %{_libdir}/gedit/plugins/changecase.plugin
 %{_libdir}/gedit/plugins/docinfo.plugin
 %{_libdir}/gedit/plugins/filebrowser.plugin
@@ -163,30 +165,35 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/gedit.desktop
 %{_mandir}/man1/gedit.1*
 
-%if 0
-%files plugins-python
+%files plugins-python3
 %defattr(644,root,root,755)
 %dir %{_libdir}/gedit/plugins/externaltools
 %dir %{_libdir}/gedit/plugins/pythonconsole
 %dir %{_libdir}/gedit/plugins/quickopen
 %dir %{_libdir}/gedit/plugins/snippets
 %{_libdir}/gedit/plugins/externaltools.plugin
+%{_libdir}/gedit/plugins/externaltools/*.py
+%{_libdir}/gedit/plugins/externaltools/__pycache__
 %{_libdir}/gedit/plugins/pythonconsole.plugin
+%{_libdir}/gedit/plugins/pythonconsole/*py
+%{_libdir}/gedit/plugins/pythonconsole/__pycache__
 %{_libdir}/gedit/plugins/quickopen.plugin
+%{_libdir}/gedit/plugins/quickopen/*.py
+%{_libdir}/gedit/plugins/quickopen/__pycache__
 %{_libdir}/gedit/plugins/snippets.plugin
-%{_libdir}/gedit/plugins/externaltools/*.py[co]
-%{_libdir}/gedit/plugins/pythonconsole/*.py[co]
-%{_libdir}/gedit/plugins/quickopen/*.py[co]
-%{_libdir}/gedit/plugins/snippets/*.py[co]
+%{_libdir}/gedit/plugins/snippets/*.py
+%{_libdir}/gedit/plugins/snippets/__pycache__
+%{py3_sitedir}/gi/overrides/*.py
+%{py3_sitedir}/gi/overrides/__pycache__/*.py[co]
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.externaltools.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.pythonconsole.gschema.xml
-%{py_sitedir}/gi/overrides/*.py[co]
-%endif
 
+%if 0
 %files plugin-zeitgeist
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gedit/plugins/libzeitgeistplugin.so
 %{_libdir}/gedit/plugins/zeitgeist.plugin
+%endif
 
 %files libs
 %defattr(644,root,root,755)
