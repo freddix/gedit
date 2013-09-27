@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.8.3
-Release:	2
+Version:	3.10.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	dd81bffac9026854e33ded9e8ed9bf7c
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	7627e2c6af5d181571005693cd00da47
 URL:		http://gedit.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -14,7 +14,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gsettings-desktop-schemas-devel
-BuildRequires:	gtk+-devel
+BuildRequires:	gtk+3-devel
 BuildRequires:	gtk-doc
 BuildRequires:	gtksourceview3-devel
 BuildRequires:	intltool
