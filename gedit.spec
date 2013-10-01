@@ -1,7 +1,7 @@
 Summary:	GNOME text editor
 Name:		gedit
 Version:	3.10.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.10/%{name}-%{version}.tar.xz
@@ -21,8 +21,7 @@ BuildRequires:	intltool
 BuildRequires:	iso-codes
 BuildRequires:	libpeas-gtk-devel
 BuildRequires:	libtool
-# zeitgeist-2.0 required
-#BuildRequires:	libzeitgeist-devel
+BuildRequires:	libzeitgeist-devel
 BuildRequires:	pkg-config
 BuildRequires:	python3-pygobject3-devel
 Requires(post,postun):	desktop-file-utils
@@ -52,8 +51,7 @@ Gedit plugins written in Python.
 Summary:	Gedit zeitgeist plugin
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
-Suggests:	zeitgeist
-Suggests:	zeitgeist-datahub
+Requires:	zeitgeist
 
 %description plugin-zeitgeist
 Logs access and leave event for documents used with gedit.
@@ -188,12 +186,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.externaltools.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.pythonconsole.gschema.xml
 
-%if 0
 %files plugin-zeitgeist
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gedit/plugins/libzeitgeistplugin.so
 %{_libdir}/gedit/plugins/zeitgeist.plugin
-%endif
 
 %files libs
 %defattr(644,root,root,755)
