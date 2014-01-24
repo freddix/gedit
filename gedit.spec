@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.10.3
+Version:	3.10.4
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	1c07e3661f8767c2223b73dd0de67f80
+# Source0-md5:	62f9e61297487bcd2ea21ec229e8e284
 URL:		http://gedit.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
