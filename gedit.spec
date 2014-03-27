@@ -1,29 +1,28 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.10.4
+Version:	3.12.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	62f9e61297487bcd2ea21ec229e8e284
-URL:		http://gedit.sourceforge.net/
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	d603299a2f885e48d8ba1cf8f16e3b6c
+URL:		https://wiki.gnome.org/Apps/Gedit
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	enchant-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-doc-utils
-BuildRequires:	gobject-introspection-devel
-BuildRequires:	gsettings-desktop-schemas-devel
-BuildRequires:	gtk+3-devel
+BuildRequires:	gobject-introspection-devel >= 1.40.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.12.0
+BuildRequires:	gtk+3-devel >= 3.12.0
 BuildRequires:	gtk-doc
-BuildRequires:	gtksourceview3-devel
+BuildRequires:	gtksourceview3-devel >= 3.12.0
 BuildRequires:	intltool
 BuildRequires:	iso-codes
 BuildRequires:	libpeas-gtk-devel
 BuildRequires:	libtool
 BuildRequires:	libzeitgeist-devel
 BuildRequires:	pkg-config
-BuildRequires:	python3-pygobject3-devel
+BuildRequires:	python-pygobject3-devel >= 3.12.0
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	glib-gio-gsettings
 Requires:	%{name}-libs = %{version}-%{release}
@@ -109,7 +108,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{ca@valencia,crh,en@shaw,la}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gedit/plugins/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gedit/{,plugins/}*.la
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/GConf
 
 %py_postclean
 
@@ -143,9 +143,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-text-editor
 %attr(755,root,root) %{_libdir}/gedit/plugins/*.so
 %if 0
-%exclude %{_libdir}/gedit/plugins/libzeitgeistplugin.so
+%exclude %{_libdir}/gedit/plugins/libzeitgeist.so
 %endif
-%{_libdir}/gedit/plugins/changecase.plugin
 %{_libdir}/gedit/plugins/docinfo.plugin
 %{_libdir}/gedit/plugins/filebrowser.plugin
 %{_libdir}/gedit/plugins/modelines.plugin
@@ -188,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files plugin-zeitgeist
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gedit/plugins/libzeitgeistplugin.so
+%attr(755,root,root) %{_libdir}/gedit/plugins/libzeitgeist.so
 %{_libdir}/gedit/plugins/zeitgeist.plugin
 
 %files libs
@@ -200,8 +199,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/gedit-3.0
+%{_includedir}/gedit-3.12
 %{_pkgconfigdir}/gedit.pc
+%{_datadir}/vala/vapi/gedit.deps
+%{_datadir}/vala/vapi/gedit.vapi
 
 %files apidocs
 %defattr(644,root,root,755)
