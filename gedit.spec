@@ -1,11 +1,11 @@
 Summary:	GNOME text editor
 Name:		gedit
-Version:	3.12.0
+Version:	3.12.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	d603299a2f885e48d8ba1cf8f16e3b6c
+# Source0-md5:	c7773745c31d2723c32d159d1e64d461
 URL:		https://wiki.gnome.org/Apps/Gedit
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -194,7 +194,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{_libdir}/gedit
 %dir %{_libdir}/gedit/girepository-1.0
-%attr(755,root,root) %{_libdir}/gedit/libgedit-private.so
+%attr(755,root,root) %{_libdir}/gedit/libgedit.so
 %{_libdir}/gedit/girepository-1.0/Gedit-3.0.typelib
 
 %files devel
