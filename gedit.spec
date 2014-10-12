@@ -1,7 +1,7 @@
 Summary:	GNOME text editor
 Name:		gedit
 Version:	3.14.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gedit/3.14/%{name}-%{version}.tar.xz
@@ -76,6 +76,9 @@ gedit API documentation.
     -i -e 's/GNOME_MAINTAINER_MODE_DEFINES//g'	\
     -i -e 's/GNOME_COMMON_INIT//g'		\
     -i -e 's/GNOME_DEBUG_CHECK//g' configure.ac
+
+%{__sed} -i 's|/bin/env |/usr/bin/|' \
+    plugins/externaltools/data/send-to-fpaste.tool.in
 
 %build
 %{__libtoolize}
